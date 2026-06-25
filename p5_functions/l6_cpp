@@ -1,0 +1,52 @@
+// CountDown
+
+#include <iostream>  // Nạp thư viện nhập/xuất chuẩn
+using namespace std; // Sử dụng không gian tên chuẩn
+
+void countDownFrom(int num); // Khai báo hàm đệ quy đếm ngược
+int sumValues(int num);      // Khai báo hàm đệ quy tính tổng
+
+int main() // Hàm chính của chương trình
+{
+    // countDownFrom(10);       // Gọi hàm đếm ngược (nếu bỏ dấu //)
+
+    // for (int i = 10; i >= 0; i--) { // Vòng lặp tương đương đếm ngược
+    //   cout << i << endl;
+    // }
+
+    int totalSum = sumValues(10);              // Gọi hàm đệ quy tính tổng từ 1 đến 10, lưu vào totalSum
+    cout << "The sum is " << totalSum << endl; // In kết quả tổng (kết quả: 55)
+
+    return 0; // Kết thúc hàm main thành công
+}
+
+void countDownFrom(int num) // Định nghĩa hàm đếm ngược
+{
+    if (num >= 0)
+    {                           // Điều kiện tiếp tục đệ quy (chưa tới 0)
+        cout << num << endl;    // In số hiện tại
+        countDownFrom(num - 1); // Gọi lại chính nó với giá trị giảm đi 1
+    }
+} // end countDownFrom
+
+int sumValues(int num) // Định nghĩa hàm tính tổng đệ quy
+{
+    if (num > 1)
+    {                                    // Điều kiện tiếp tục đệ quy (lớn hơn 1)
+        return num + sumValues(num - 1); // Trả về số hiện tại cộng với tổng của số nhỏ hơn
+    }
+    return 0; // Dừng đệ quy (Base case) khi num = 1 hoặc nhỏ hơn, trả về 0 hoặc num
+}
+
+// Giải thích nhanh về Đệ quy (Recursion):
+// Đệ quy là gì? Là hiện tượng hàm tự gọi lại chính nó bên trong phần thân của nó.
+
+// Điểm dừng (Base Case): Đây là phần quan trọng nhất của đệ quy. Nếu không có điều kiện dừng (như if (num >= 0) hoặc if (num > 1)), hàm sẽ tự gọi lại vô tận làm tràn bộ nhớ (stack overflow).
+
+// Cách hàm sumValues(10) hoạt động ngầm:
+
+// sumValues(10) bằng 10 + sumValues(9)
+
+// sumValues(9) bằng 9 + sumValues(8)
+
+// ...cứ tiếp tục phân rã cho đến khi sumValues(1) đạt điều kiện dừng và trả về 1. Máy tính bắt đầu tính ngược lại từ dưới lên để ra tổng 55.

@@ -1,0 +1,11 @@
+https://github.com/profjpbaugh/complete-cpp-developer-course-2025
+
+#--- build .exe
+g++ l_1.cpp -o l_1
+
+g++ main.cpp -o main
+
+#--- run
+./l_1.exe
+
+./main
