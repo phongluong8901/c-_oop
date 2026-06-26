@@ -5,6 +5,12 @@ g++ l_1.cpp -o l_1
 
 g++ main.cpp -o main
 
+- là cách bạn yêu cầu trình biên dịch g++ gộp và dịch nhiều file mã nguồn C++ lại với nhau để tạo ra một file chạy duy nhất.
+g++ main.cpp House.cpp -o main
+g++ main.cpp Rectangle.cpp -o main
+g++ main.cpp Drone.cpp -o main
+g++ main.cpp Player.cpp -o main
+
 #--- run
 ./l_1.exe
 

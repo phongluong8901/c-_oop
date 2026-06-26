@@ -1,0 +1,25 @@
+#---
+Giải thích vai trò của từng file
+File Header (House.h - Phần Khai Báo):
+Nơi bạn "quảng cáo" cho thế giới biết class House có những gì (gồm những biến nào, hàm nào). Nó giống như mục lục hoặc bản thiết kế sơ bộ. File này không chứa code xử lý chi tiết.
+
+File Source (House.cpp - Phần Triển Khai):
+Nơi bạn viết chi tiết ruột gan của các hàm (ví dụ hàm print làm gì, hàm setColor gán giá trị ra sao). Nó kết nối với House.h bằng dòng #include "House.h".
+
+File Chạy (main.cpp - Phần Sử Dụng):
+Nơi chương trình bắt đầu chạy. Nó chỉ cần #include "House.h" để biết class House có tồn tại và cách gọi hàm, chứ không cần quan tâm các hàm đó được viết code bên trong như thế nào.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

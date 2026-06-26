@@ -1,76 +1,28 @@
 #include <iostream>
 #include <string>
+#include "House.h" //sao chép và dán toàn bộ nội dung của file
 
 using namespace std;
 
 //-------House Class
-class House
-{
-public:
-    void setNumStories(int numStories)
-    {
-        this->numStories = numStories;
-    }
-
-    void setNumWindows(int numWindows)
-    {
-        this->numWindows = numWindows;
-    }
-
-    void setColor(string color)
-    {
-        this->color = color;
-    }
-
-    int getNumStories() const
-    {
-        return numStories;
-    }
-
-    int getNumWindows() const
-    {
-        return numWindows;
-    }
-
-    string getColor() const
-    {
-        return color;
-    }
-
-private:
-    int numStories;
-    int numWindows;
-    string color;
-};
-//======= PROTOTYPE
-
-void printHouseData(const House &house);
 
 //--------Main function
 
 int main()
 {
-    House myHouse;
+    House myHouse; // Dòng này cấp phát bộ nhớ và khởi tạo một ngôi nhà cụ thể mang tên myHouse.
     House yourHouse;
 
+    cout << "Before calling any settings..." << ends;
+    myHouse.print();
+
+    // now call settings
     myHouse.setNumStories(2);
     myHouse.setNumWindows(6);
     myHouse.setColor("red");
 
-    yourHouse.setNumStories(3);
-    yourHouse.setNumWindows(10);
-    yourHouse.setColor("blue");
-
-    printHouseData(myHouse);
-    printHouseData(yourHouse);
+    cout << "\nAfter calling settings..." << ends;
+    myHouse.print();
 
     return 0;
-}
-
-void printHouseData(const House &house)
-{
-    cout << "The house is " << house.getColor()
-         << " and has " << house.getNumStories()
-         << " stories and " << house.getNumWindows()
-         << " windows." << endl;
 }

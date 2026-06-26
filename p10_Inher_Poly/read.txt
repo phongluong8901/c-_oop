@@ -1,0 +1,129 @@
+1. Kế thừa (Inheritance) trong C++
+Kế thừa là cơ chế cho phép một lớp (được gọi là lớp dẫn xuất hay lớp con - Derived Class) kế thừa các thuộc tính và phương thức từ một lớp khác (được gọi là lớp cơ sở hay lớp cha - Base Class). Điều này giúp tái sử dụng mã nguồn và xây dựng mối quan hệ phân cấp giữa các đối tượng.
+
+Các loại kế thừa phổ biến
+Kế thừa công khai (public): Các thành viên public và protected của lớp cha vẫn giữ nguyên quyền truy cập ở lớp con.
+
+Kế thừa bảo vệ (protected): Các thành viên public và protected của lớp cha trở thành protected ở lớp con.
+
+Kế thừa riêng tư (private): Các thành viên public và protected của lớp cha trở thành private ở lớp con.
+
+Ví dụ minh họa
+C++
+
+
+#include <iostream>
+using namespace std;
+
+// Lớp cha (Base Class)
+class DongVat {
+public:
+    void an() {
+        cout << "Dong vat dang an..." << endl;
+    }
+};
+
+// Lớp con (Derived Class) kế thừa từ DongVat
+class Cho : public DongVat {
+public:
+    void sula() {
+        cout << "Gau gau!" << endl;
+    }
+};
+
+int main() {
+    Cho myDog;
+    myDog.an();  // Kế thừa phương thức từ lớp cha
+    myDog.sula(); // Phương thức của lớp con
+    return 0;
+}
+
+----------------
+2. Đa hình (Polymorphism) trong C++
+Đa hình có nghĩa là "nhiều hình thái". Trong C++, đa hình cho phép một lời gọi hàm duy nhất thực hiện các hành động khác nhau tùy thuộc vào đối tượng đang gọi nó. Đa hình được chia làm hai loại chính:
+
+a. Đa hình lúc biên dịch (Compile-time Polymorphism / Early Binding)
+Đạt được thông qua nạp chồng hàm (Function Overloading) và nạp chồng toán tử (Operator Overloading). Trình biên dịch quyết định hàm nào được gọi tại thời điểm biên dịch.
+
+b. Đa hình lúc运行时 (Run-time Polymorphism / Late Binding)
+Đạt được thông qua ghi đè hàm (Function Overriding) sử dụng con trỏ hoặc tham chiếu của lớp cha, kết hợp với từ khóa virtual.
+
+Hàm ảo (Virtual Function): Hàm được khai báo với từ khóa virtual ở lớp cha để thông báo cho trình biên dịch biết rằng hàm này có thể bị ghi đè ở lớp con.
+
+Ví dụ minh họa đa hình lúc chạy
+C++
+
+
+#include <iostream>
+using namespace std;
+
+class HinhHoc {
+public:
+    // Hàm ảo cho phép ghi đè
+    virtual void ve() {
+        cout << "Ve mot hinh hoc chung." << endl;
+    }
+};
+
+class HinhTron : public HinhHoc {
+public:
+    void ve() override {
+        cout << "Ve mot hinh tron." << endl;
+    }
+};
+
+class HinhVuong : public HinhHoc {
+public:
+    void ve() override {
+        cout << "Ve mot hinh vuong." << endl;
+    }
+};
+
+int main() {
+    HinhHoc *hinh;
+    HinhTron tron;
+    HinhVuong vuong;
+
+    // Trỏ tới hình tròn
+    hinh = &tron;
+    hinh->ve(); // Xuất: Ve mot hinh tron.
+
+    // Trỏ tới hình vuông
+    hinh = &vuong;
+    hinh->ve(); // Xuất: Ve mot hinh vuong.
+
+    return 0;
+}
+
+--
+
+1. HinhHoc *hinh; đang chỉ vào đâu?
+HinhHoc *hinh; là khai báo một con trỏ thuộc kiểu HinhHoc (lớp cha). Tại thời điểm vừa khai báo, con trỏ này chưa trỏ vào đâu cả (hoặc đang trỏ vào một vùng nhớ rác ngẫu nhiên).
+
+Nó có tiềm năng trỏ tới địa chỉ của bất kỳ đối tượng nào thuộc lớp HinhHoc, hoặc các lớp con kế thừa từ HinhHoc (như HinhTron và HinhVuong).
+
+2. hinh = &tron; là sao?
+Toán tử & dùng để lấy địa chỉ của biến. Lệnh hinh = &tron; có nghĩa là:
+
+Lấy địa chỉ trong bộ nhớ của đối tượng tron (kiểu HinhTron).
+
+Gán địa chỉ đó cho con trỏ hinh.
+
+Lúc này, con trỏ hinh đang trỏ trực tiếp vào vùng nhớ của đối tượng tron.
+
+3. Tại sao hinh->ve(); lại gọi ra hình tròn thay vì hình vuông hay hình chung?
+Đây chính là cơ chế Đa hình (Polymorphism) thông qua Bảng hàm ảo (vtable) trong C++:
+
+Từ khóa virtual: Khi lớp HinhHoc khai báo virtual void ve(), trình biên dịch hiểu rằng hàm này có thể bị ghi đè và tạo ra một bảng quản lý hàm ảo cho đối tượng.
+
+Ghi đè (override): Lớp HinhTron định nghĩa lại hàm ve().
+
+Thực thi: Khi hinh = &tron;, con trỏ hinh đang giữ địa chỉ của HinhTron. Khi gọi hinh->ve();, C++ không nhìn vào kiểu của con trỏ (kiểu HinhHoc), mà nó nhìn vào thực thể dưới đáy mà con trỏ đang trỏ tới (thực thể HinhTron). Do đó, phiên bản hàm ve() của HinhTron được kích hoạt và in ra Ve mot hinh tron.
+
+--
+Khác biệt giữa hinh = &tron và hinh = tron
+Sự khác biệt nằm ở việc bạn đang thao tác với địa chỉ hay giá trị của đối tượng:
+
+hinh = &tron; (Đúng): Dùng toán tử & để lấy địa chỉ của biến tron trong bộ nhớ RAM và gán cho con trỏ hinh. Con trỏ cần lưu địa chỉ, nên cách này chính xác.
+
+hinh = tron; (Lỗi biên dịch): tron là một đối tượng cụ thể (giá trị), còn hinh là một con trỏ (chứa địa chỉ). Bạn không thể gán trực tiếp một giá trị kiểu HinhTron vào một con trỏ kiểu HinhHoc * mà không thông qua địa chỉ của nó.

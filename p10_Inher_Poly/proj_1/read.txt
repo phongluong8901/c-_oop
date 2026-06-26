@@ -1,0 +1,5 @@
+Đoạn code bạn cung cấp là một ví dụ hoàn hảo về 
+Lớp trừu tượng (Abstract Class), 
+Kế thừa (Inheritance), 
+Đa hình (Polymorphism), 
+và Cấp phát bộ nhớ động (Dynamic Memory Allocation) trong C++.
